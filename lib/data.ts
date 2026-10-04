@@ -4,7 +4,7 @@ export const stats = {
   completed: 18,
   scenarios: 8,
 };
-
+ 
 export const trainees = [
   {
     id: 1,
