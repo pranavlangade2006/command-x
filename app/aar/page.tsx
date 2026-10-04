@@ -1,3 +1,5 @@
+"use client";
+
 import Sidebar from "@/components/Sidebar";
 
 export default function AAR() {
@@ -61,7 +63,7 @@ export default function AAR() {
             ["10:45", "Conflicting report received"],
             ["10:47", "Information request submitted"],
             ["10:50", "Decision submitted"],
-            ["10:54", "Exercise completed"]
+            ["10:54", "Exercise completed"],
           ].map(([time, text]) => (
             <div className="timeline-item" key={time}>
               <strong>{time}</strong>
