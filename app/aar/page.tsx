@@ -2,7 +2,7 @@
 
 import Sidebar from "@/components/Sidebar";
 
-export default function AAR() {
+export default function AAR() { 
   return (
     <div className="app-shell">
       <Sidebar />
