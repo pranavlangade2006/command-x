@@ -72,7 +72,7 @@ export default function Dashboard() {
             <h2>
               Welcome back,
               <br />
-              <span>Jayesh!</span>
+              <span>pranav!</span>
             </h2>
 
             <p>
