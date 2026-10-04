@@ -1,5 +1,5 @@
 export const stats = {
-  exercises: 24,
+  exercises: 24, 
   activeTrainees: 12,
   completed: 18,
   scenarios: 8,
