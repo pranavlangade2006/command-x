@@ -1,141 +1,403 @@
 "use client";
 
-import Sidebar from "@/components/Sidebar";
-import { stats, trainees, scenarios } from "@/lib/data";
-import {
-  Activity,
-  Users,
-  Target,
-  CheckCircle,
-  ArrowRight
-} from "lucide-react";
 import Link from "next/link";
+import Sidebar from "@/components/Sidebar";
+import {
+  dashboardCourses,
+  dashboardModules,
+  recentActivity,
+  assessments,
+} from "@/lib/data";
+import {
+  Bell,
+  ChevronRight,
+  Clock3,
+  BookOpen,
+  ClipboardCheck,
+  Users,
+  ArrowUpRight,
+  Play,
+  ShieldCheck,
+  Target,
+  Award,
+} from "lucide-react";
 
 export default function Dashboard() {
+  const overallProgress = 65;
+
   return (
     <div className="app-shell">
       <Sidebar />
 
-      <main className="main">
-        <header className="topbar">
+      <main className="main dashboard-main">
+        {/* TOP BAR */}
+        <header className="dashboard-topbar">
           <div>
-            <p className="eyebrow">COMMAND-X</p>
-            <h1>Main Dashboard</h1>
-            <p className="muted">
-              Decision-making training environment
+            <p className="dashboard-kicker">
+              COMMAND-X TRAINING PLATFORM
+            </p>
+
+            <h1>Dashboard</h1>
+
+            <p className="dashboard-subtitle">
+              Your defence training command center
             </p>
           </div>
 
-          <div className="status-pill">
-            <span />
-            Training System Online
+          <div className="topbar-actions">
+            <button className="notification-button">
+              <Bell size={20} />
+              <span />
+            </button>
+
+            <div className="profile">
+              <div className="profile-avatar">JK</div>
+
+              <div>
+                <strong>Jayesh Kadam</strong>
+                <small>Trainee</small>
+              </div>
+            </div>
           </div>
         </header>
 
-        <section className="stats-grid">
-          <Stat
-            title="Total Exercises"
-            value={stats.exercises}
-            icon={<Target />}
+        {/* WELCOME CARD */}
+        <section className="welcome-card">
+          <div className="welcome-content">
+            <div className="welcome-badge">
+              <ShieldCheck size={15} />
+              TRAINING SYSTEM ONLINE
+            </div>
+
+            <h2>
+              Welcome back,
+              <br />
+              <span>Jayesh!</span>
+            </h2>
+
+            <p>
+              Continue your training journey and sharpen
+              your decision-making skills.
+            </p>
+
+            <Link href="/training" className="welcome-button">
+              Continue Training
+              <ArrowUpRight size={17} />
+            </Link>
+          </div>
+
+          <div className="welcome-progress">
+            <div className="progress-ring">
+              <div>
+                <strong>{overallProgress}%</strong>
+                <span>Complete</span>
+              </div>
+            </div>
+
+            <p>Overall Training Progress</p>
+          </div>
+        </section>
+
+        {/* STAT CARDS */}
+        <section className="dashboard-stats">
+          <StatCard
+            icon={<BookOpen />}
+            label="Active Courses"
+            value="3"
+            text="2 in progress"
           />
-          <Stat
-            title="Active Trainees"
-            value={stats.activeTrainees}
+
+          <StatCard
+            icon={<ClipboardCheck />}
+            label="Assessments"
+            value="8"
+            text="3 completed"
+          />
+
+          <StatCard
             icon={<Users />}
+            label="Team Members"
+            value="12"
+            text="8 currently online"
           />
-          <Stat
-            title="Completed"
-            value={stats.completed}
-            icon={<CheckCircle />}
-          />
-          <Stat
-            title="Scenarios"
-            value={stats.scenarios}
-            icon={<Activity />}
+
+          <StatCard
+            icon={<Award />}
+            label="Achievements"
+            value="7"
+            text="2 this month"
           />
         </section>
 
-        <div className="dashboard-grid">
-          <section className="panel">
-            <div className="panel-header">
-              <div>
-                <h2>Active Teams</h2>
-                <p>Current training sessions</p>
-              </div>
-              <Link href="/team">View All</Link>
-            </div>
+        {/* MAIN GRID */}
+        <div className="dashboard-content-grid">
+          {/* COURSES */}
+          <section className="dashboard-card courses-card">
+            <CardHeader
+              title="My Courses"
+              subtitle="Continue where you left off"
+              link="/training"
+            />
 
-            <div className="team-list">
-              {trainees.map((team) => (
-                <div className="team-row" key={team.id}>
-                  <div className="avatar">{team.name.charAt(0)}</div>
-
-                  <div className="team-info">
-                    <strong>{team.name}</strong>
-                    <span>{team.members} members</span>
+            <div className="course-list">
+              {dashboardCourses.map((course) => (
+                <div className="course-item" key={course.id}>
+                  <div className="course-icon">
+                    {course.icon}
                   </div>
 
-                  <div className="progress-wrap">
-                    <div className="progress">
-                      <div style={{ width: `${team.progress}%` }} />
+                  <div className="course-details">
+                    <div className="course-title-row">
+                      <div>
+                        <span className="course-category">
+                          {course.category}
+                        </span>
+
+                        <h3>{course.title}</h3>
+                      </div>
+
+                      <strong>{course.progress}%</strong>
                     </div>
-                    <small>{team.progress}%</small>
-                  </div>
 
-                  <span className={`badge ${team.status.toLowerCase()}`}>
-                    {team.status}
-                  </span>
+                    <div className="course-progress">
+                      <div
+                        style={{
+                          width: `${course.progress}%`,
+                        }}
+                      />
+                    </div>
+
+                    <div className="course-meta">
+                      <span>
+                        {course.completed} / {course.lessons} lessons
+                      </span>
+
+                      <Link href="/training">
+                        Continue
+                        <ChevronRight size={14} />
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
           </section>
 
-          <section className="panel">
-            <div className="panel-header">
-              <div>
-                <h2>Available Scenarios</h2>
-                <p>Training scenarios</p>
-              </div>
-            </div>
+          {/* RECENT ACTIVITY */}
+          <section className="dashboard-card">
+            <CardHeader
+              title="Recent Activity"
+              subtitle="Your latest training activity"
+            />
 
-            {scenarios.map((scenario) => (
-              <div className="scenario-card" key={scenario.id}>
-                <div>
-                  <span className="scenario-id">{scenario.id}</span>
-                  <h3>{scenario.name}</h3>
-                  <p>
-                    {scenario.domain} · {scenario.duration}
-                  </p>
+            <div className="activity-list">
+              {recentActivity.map((item) => (
+                <div className="activity-item" key={item.id}>
+                  <div
+                    className={`activity-dot ${item.type}`}
+                  />
+
+                  <div className="activity-content">
+                    <strong>{item.title}</strong>
+                    <p>{item.description}</p>
+
+                    <span>
+                      <Clock3 size={12} />
+                      {item.time}
+                    </span>
+                  </div>
                 </div>
-
-                <span className="difficulty">
-                  {scenario.difficulty}
-                </span>
-              </div>
-            ))}
+              ))}
+            </div>
           </section>
         </div>
+
+        {/* LOWER GRID */}
+        <div className="dashboard-content-grid lower-grid">
+          {/* TRAINING MODULES */}
+          <section className="dashboard-card">
+            <CardHeader
+              title="Training Modules"
+              subtitle="Build your operational skills"
+              link="/training"
+            />
+
+            <div className="module-grid">
+              {dashboardModules.map((module) => (
+                <Link
+                  href="/training"
+                  className="module-card"
+                  key={module.id}
+                >
+                  <div className="module-top">
+                    <span>{module.number}</span>
+
+                    <Target size={18} />
+                  </div>
+
+                  <h3>{module.title}</h3>
+
+                  <p>{module.description}</p>
+
+                  <div className="module-progress">
+                    <div className="module-progress-label">
+                      <span>{module.lessons}</span>
+                      <strong>{module.progress}%</strong>
+                    </div>
+
+                    <div className="course-progress">
+                      <div
+                        style={{
+                          width: `${module.progress}%`,
+                        }}
+                      />
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </section>
+
+          {/* QUICK STATS */}
+          <section className="dashboard-card quick-stats-card">
+            <CardHeader
+              title="Quick Stats"
+              subtitle="Your performance overview"
+            />
+
+            <div className="quick-stat">
+              <div className="quick-stat-icon">
+                <Target size={19} />
+              </div>
+
+              <div>
+                <span>Training Accuracy</span>
+                <strong>87%</strong>
+              </div>
+
+              <span className="stat-up">+8%</span>
+            </div>
+
+            <div className="quick-stat">
+              <div className="quick-stat-icon">
+                <Clock3 size={19} />
+              </div>
+
+              <div>
+                <span>Training Time</span>
+                <strong>24h 36m</strong>
+              </div>
+
+              <span className="stat-up">+3h</span>
+            </div>
+
+            <div className="quick-stat">
+              <div className="quick-stat-icon">
+                <Award size={19} />
+              </div>
+
+              <div>
+                <span>Average Score</span>
+                <strong>82 / 100</strong>
+              </div>
+
+              <span className="stat-up">+5</span>
+            </div>
+
+            <div className="ready-card">
+              <div>
+                <small>READY FOR ACTION?</small>
+
+                <h3>Train Hard.</h3>
+                <h3>Stay Ready.</h3>
+              </div>
+
+              <Link href="/training">
+                <Play size={18} fill="currentColor" />
+              </Link>
+            </div>
+          </section>
+        </div>
+
+        {/* ASSESSMENTS */}
+        <section className="dashboard-card assessments-card">
+          <CardHeader
+            title="Latest Assessments"
+            subtitle="Your recent assessment results"
+          />
+
+          <div className="assessment-table">
+            {assessments.map((assessment) => (
+              <div
+                className="assessment-row"
+                key={assessment.id}
+              >
+                <div>
+                  <strong>{assessment.title}</strong>
+                  <span>{assessment.subject}</span>
+                </div>
+
+                <div className="assessment-score">
+                  <strong>{assessment.score}%</strong>
+                  <span>{assessment.status}</span>
+                </div>
+
+                <ChevronRight size={18} />
+              </div>
+            ))}
+          </div>
+        </section>
       </main>
     </div>
   );
 }
 
-function Stat({
-  title,
+function StatCard({
+  icon,
+  label,
   value,
-  icon
+  text,
 }: {
-  title: string;
-  value: number;
   icon: React.ReactNode;
+  label: string;
+  value: string;
+  text: string;
 }) {
   return (
-    <div className="stat-card">
-      <div className="stat-icon">{icon}</div>
-      <div>
-        <span>{title}</span>
+    <div className="dashboard-stat-card">
+      <div className="dashboard-stat-icon">{icon}</div>
+
+      <div className="dashboard-stat-info">
+        <span>{label}</span>
         <strong>{value}</strong>
+        <small>{text}</small>
       </div>
+    </div>
+  );
+}
+
+function CardHeader({
+  title,
+  subtitle,
+  link,
+}: {
+  title: string;
+  subtitle: string;
+  link?: string;
+}) {
+  return (
+    <div className="dashboard-card-header">
+      <div>
+        <h2>{title}</h2>
+        <p>{subtitle}</p>
+      </div>
+
+      {link && (
+        <Link href={link}>
+          View All
+          <ChevronRight size={15} />
+        </Link>
+      )}
     </div>
   );
 }
