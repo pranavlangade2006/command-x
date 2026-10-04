@@ -54,7 +54,7 @@ export default function Dashboard() {
               <div className="profile-avatar">JK</div>
 
               <div>
-                <strong>Jayesh Kadam</strong>
+                <strong>pranav langade</strong>
                 <small>Trainee</small>
               </div>
             </div>
