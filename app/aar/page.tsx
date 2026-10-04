@@ -5,7 +5,7 @@ import Sidebar from "@/components/Sidebar";
 export default function AAR() { 
   return (
     <div className="app-shell">
-      <Sidebar />
+      <Sidebar /> 
 
       <main className="main">
         <header className="topbar">
